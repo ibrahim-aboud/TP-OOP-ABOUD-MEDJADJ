@@ -32,12 +32,6 @@ public class Planning {
     public void extendPlanning(){
         // checks if extension is possible in the method extendPlanning of Calendar, after confirmation the extension operation is done here
     }
-    public void addTask(Task task, Day day){
-        // it will eventually call addTask of the class Day
-    }
-    public void addTask(Task task, LocalDateTime dateTime, Day day){
-        // it will eventually call addTask of the class Day
-    }
 
     // temp
     public void showPlanning() {

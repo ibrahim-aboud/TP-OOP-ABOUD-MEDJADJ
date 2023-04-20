@@ -11,6 +11,8 @@ public class Calendar {
     private ArrayList<Planning> plannings = new ArrayList<>();
     private TreeMap<LocalDate, Day> calendar = new TreeMap<>();
 
+    // add a structure for tasks (scheduled and unscheduled)
+
 
     public void addDay(Day day) {
         calendar.putIfAbsent(day.getDate(), day);
