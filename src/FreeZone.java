@@ -1,4 +1,5 @@
 import java.time.LocalTime;
+import java.time.Duration;
 
 public class FreeZone implements Comparable<FreeZone> {
     private static final boolean free = true;
@@ -19,6 +20,10 @@ public class FreeZone implements Comparable<FreeZone> {
     }
     public LocalTime getEndTime() {
         return endTime;
+    }
+
+    public Duration getDuration(){
+        return Duration.between(startTime,endTime);
     }
 
     @Override
