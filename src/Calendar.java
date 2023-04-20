@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -14,7 +15,10 @@ public class Calendar {
     public void addDay(Day day) {
         calendar.putIfAbsent(day.getDate(), day);
     }
-
+    public Day getDay(LocalDate date) {
+        // can return null if the day doesn't exist in the tree (days)
+        return calendar.getOrDefault(date, null);
+    }
     public void addPlanning(Planning planning) {
         Day day;
         // plannings can override, so there are no restriction to how plannings are added

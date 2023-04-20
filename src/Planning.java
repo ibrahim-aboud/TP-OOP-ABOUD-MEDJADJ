@@ -1,12 +1,9 @@
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Planning {
-    private Set<Day> days = new TreeSet<>();
+    private TreeMap<LocalDate, Day> days = new TreeMap<>();
     private LocalDate startDay;
     private LocalDate endDay;
 
@@ -25,9 +22,12 @@ public class Planning {
     public LocalDate getEndDay(){
         return endDay;
     }
-
+    public Day getDay(LocalDate date) {
+        // can return null if the day doesn't exist in the tree (days)
+        return days.getOrDefault(date, null);
+    }
     public void addDay(Day day) {
-        days.add(day);
+        days.putIfAbsent(day.getDate(), day);
     }
     public void extendPlanning(){
         // checks if extension is possible in the method extendPlanning of Calendar, after confirmation the extension operation is done here
@@ -41,8 +41,8 @@ public class Planning {
 
     // temp
     public void showPlanning() {
-        for (Day d : days) {
-            System.out.println(d.getDate()+" ->  "+d);
+        for (Map.Entry<LocalDate, Day> d : days.entrySet()) {
+            System.out.println(d.getValue().getDate()+" ->  "+d);
         }
     }
 
