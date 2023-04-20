@@ -39,15 +39,15 @@ public class Main {
 
         Task task1 = new SimpleTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,12,12,17,30), Duration.ofHours(3),1);
         Task task2 = new ComplexTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,12,12,17,30), Duration.ofHours(5));
-        FreeZone freeZone= new FreeZone(LocalTime.of(8,30),LocalTime.of(16,0));
+        FreeZone freeZone= new FreeZone(LocalTime.of(8,30),LocalTime.of(11,30));
         FreeZone freeZone2= new FreeZone(LocalTime.of(8,30),LocalTime.of(16,0));
         freeZone.showZone();
- /*       ArrayList<FreeZone> fragementedZones=freeZone.appendTask((SimpleTask) task1,Duration.ofMinutes(30));
+        ArrayList<FreeZone> fragementedZones=freeZone.appendTask((SimpleTask) task1,Duration.ofMinutes(30));
         for (Iterator<FreeZone> iter = fragementedZones.iterator(); iter.hasNext(); ) {
             iter.next().showZone();
         }
-        ((SimpleTask) task1).showZone();*/
-        ArrayList<FreeZone> fragementedZones=freeZone.appendTask((ComplexTask) task2,Duration.ofMinutes(30),LocalTime.of(14,0));
+        ((SimpleTask) task1).showZone();
+        /*ArrayList<FreeZone> fragementedZones=freeZone.appendTask((ComplexTask) task2,Duration.ofMinutes(30),LocalTime.of(14,0));
         for (Iterator<FreeZone> iter = fragementedZones.iterator(); iter.hasNext(); ) {
             iter.next().showZone();
         }
@@ -57,6 +57,6 @@ public class Main {
         for (Iterator<FreeZone> iter = fragementedZones2.iterator(); iter.hasNext(); ) {
             iter.next().showZone();
         }
-        ((ComplexTask) task2).showZone();
+        ((ComplexTask) task2).showZone();*/
     }
 }
