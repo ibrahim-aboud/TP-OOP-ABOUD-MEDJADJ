@@ -1,4 +1,3 @@
-import java.time.Duration;
 import java.time.LocalTime;
 
 public class FreeZone {
@@ -8,8 +7,5 @@ public class FreeZone {
 
     public boolean isFree(){
         return free;
-    }
-    public Duration getDuration(){
-        return Duration.between(startTime,endTime);
     }
 }
