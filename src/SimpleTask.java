@@ -20,4 +20,8 @@ public class SimpleTask extends Task{
         assignedZone=null;
         setUnscheduled(true);
     }
+
+    public void showZone(){
+        assignedZone.showZone();
+    }
 }
