@@ -125,9 +125,9 @@ public class FreeZone implements Comparable<FreeZone> {
         return appendTask(task,minimumZonePeriod,startTime,duration);
     }
 
-    public void showZone(){
-        System.out.println("freeZone: from "+startTime.toString()+" to "+endTime.toString());
-
+    public void showZone() {
+        System.out.println("freeZone: from " + startTime.toString() + " to " + endTime.toString());
+    }
     @Override
     public boolean equals(Object obj) {
         FreeZone z = (FreeZone) obj;
