@@ -1,21 +1,20 @@
+
 import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class FreeZone {
 
-    public FreeZone(LocalTime startTime,LocalTime endTime){
-        this.startTime=startTime;
-        this.endTime=endTime;
-    }
-    private static final boolean free = true;
+public class FreeZone implements Comparable<FreeZone> {
     private LocalTime startTime;
     private LocalTime endTime;
 
-    public boolean isFree(){
-        return free;
+    public FreeZone(LocalTime startTime, LocalTime endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
+
+
 
     public LocalTime getEndTime() {
         return endTime;
@@ -25,9 +24,11 @@ public class FreeZone {
         return startTime;
     }
 
+
     public Duration getDuration(){
         return Duration.between(startTime,endTime);
     }
+
     public ArrayList<FreeZone> appendTask(SimpleTask task, Duration minimumZonePeriod, LocalTime insertionTime){
         // we suppose that a task is insertable in the Zone (already checked)
         ArrayList<FreeZone> outPutZones = new ArrayList<FreeZone>(1);
@@ -126,5 +127,15 @@ public class FreeZone {
 
     public void showZone(){
         System.out.println("freeZone: from "+startTime.toString()+" to "+endTime.toString());
+
+    @Override
+    public boolean equals(Object obj) {
+        FreeZone z = (FreeZone) obj;
+        return (z.getStartTime().equals(startTime) && z.getEndTime().equals(endTime));
+    }
+
+    @Override
+    public int compareTo(FreeZone o) {
+        return startTime.compareTo(o.getStartTime());
     }
 }
