@@ -7,7 +7,7 @@ import java.util.Iterator;
 public class ComplexTask extends Task{
     public ComplexTask(String name, Category category, Priority priority, LocalDateTime deadLine, Duration duration){
         super(name,category,priority,deadLine,duration);
-        this.assignedZones=null;
+        this.assignedZones=new ArrayList<FreeZone>(0);
     }
     private ArrayList<FreeZone> assignedZones;
     @Override
@@ -32,13 +32,22 @@ public class ComplexTask extends Task{
     @Override
     public Duration getDuration() {
         Duration durationLeft = super.getDuration();
-        for (Iterator<FreeZone> iter = assignedZones.iterator(); iter.hasNext(); ) {
-            durationLeft = durationLeft.minus(iter.next().getDuration());
+        if(!assignedZones.isEmpty()){
+            for (Iterator<FreeZone> iter = assignedZones.iterator(); iter.hasNext(); ) {
+                durationLeft = durationLeft.minus(iter.next().getDuration());
+            }
         }
+
         return durationLeft;
     }
 
     public int zonesNumber(){
         return assignedZones.size();
+    }
+
+    public void showZone(){
+        for (Iterator<FreeZone> iter = assignedZones.iterator(); iter.hasNext(); ) {
+            iter.next().showZone();
+        }
     }
 }
