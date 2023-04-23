@@ -110,13 +110,13 @@ abstract class Task implements Comparable<Task>{
 
     // checks whether a task is insertable in a zone
     public boolean isInsertable(FreeZone zone){
-
+        return isInsertable(zone,zone.getStartTime());
     }
 
     public boolean isInsertable(FreeZone zone,LocalTime insertionTime){
         //must check first that it is unscheduled !
         // verify wether the zone is after the deadline of the task and that the zone is not occupied
-        if(!(zone instanceof OccupiedZone) && getDeadLine().toLocalTime().isAfter(zone.getStartTime())){
+        if(zone.contains(insertionTime) && !(zone instanceof OccupiedZone) && getDeadLine().toLocalTime().isAfter(zone.getStartTime())){
             // verify if the task fits inside the zone and that it is still within the deadline after the insertion
             if(getDuration().minus(zone.getDuration()).isPositive() && getDeadLine().toLocalTime().isAfter(zone.getStartTime().plus(getDuration()))  ){
                 return true;
@@ -153,7 +153,6 @@ abstract class Task implements Comparable<Task>{
         }
         return null;
     }
-
     public boolean equals(Task task){
         return (this.unscheduled==task.getUnscheduled() && this.name==task.getName() && this.deadLine.equals(task.deadLine) && this.duration.minus(task.duration)==Duration.ZERO);
     }

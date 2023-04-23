@@ -105,25 +105,30 @@ public class Day implements Comparable<Day> {
 
     public void appendTask(Task task, Duration minimumZoneLength){
         // must check if unschedule before calling this
-        if(task instanceof SimpleTask){
-            FreeZone zone=task.getInsertable(this);
-            removeZone(zone);
-            ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength);
-            for (FreeZone zn : zones){
-                insertZone(zn);
+        if(task.isInsertable(this)){
+            if(task instanceof SimpleTask){
+                FreeZone zone=task.getInsertable(this);
+                removeZone(zone);
+                ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength);
+                for (FreeZone zn : zones){
+                    insertZone(zn);
+                }
+            }
+            else if(task instanceof ComplexTask){
+                FreeZone zone=task.getInsertable(this);
+                removeZone(zone);
+                ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength);
+                for(FreeZone zn:zones){
+                    insertZone(zn);
+                }
             }
         }
-        else if(task instanceof ComplexTask){
-            FreeZone zone=task.getInsertable(this);
-            removeZone(zone);
-            ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength);
-            for(FreeZone zn:zones){
-                insertZone(zn);
-            }
-        }
+
     }
 
-    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime){
+    // to complete later (highlight the insertionTime parameter)
+
+/*    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime){
         if(task instanceof SimpleTask){
             FreeZone zone=task.getInsertable(this);
             removeZone(zone);
@@ -140,9 +145,11 @@ public class Day implements Comparable<Day> {
                 insertZone(zn);
             }
         }
-    }
+    }*/
 
-    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime,Duration subTaskDuration){
+    // to complete later (highlight the insertionTime parameter)
+
+/*    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime,Duration subTaskDuration){
         if(task instanceof SimpleTask){
             FreeZone zone=task.getInsertable(this);
             removeZone(zone);
@@ -159,7 +166,7 @@ public class Day implements Comparable<Day> {
                 insertZone(zn);
             }
         }
-    }
+    }*/
 
     public void appendTask(Task task,Duration minimumZoneLength ,Duration subTaskDuration){
         if(task instanceof SimpleTask){
@@ -181,6 +188,8 @@ public class Day implements Comparable<Day> {
     }
 
     public void appendTask(Task task,FreeZone zone){
-
+        if(contains(zone) && task.isInsertable(this,zone)){
+            
+        }
     }
 }
