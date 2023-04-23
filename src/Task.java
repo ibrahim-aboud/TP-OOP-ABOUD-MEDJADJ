@@ -110,6 +110,10 @@ abstract class Task implements Comparable<Task>{
 
     // checks whether a task is insertable in a zone
     public boolean isInsertable(FreeZone zone){
+
+    }
+
+    public boolean isInsertable(FreeZone zone,LocalTime insertionTime){
         //must check first that it is unscheduled !
         // verify wether the zone is after the deadline of the task and that the zone is not occupied
         if(!(zone instanceof OccupiedZone) && getDeadLine().toLocalTime().isAfter(zone.getStartTime())){
