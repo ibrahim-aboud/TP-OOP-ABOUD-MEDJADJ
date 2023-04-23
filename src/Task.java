@@ -2,6 +2,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Period;
+import java.util.Date;
 
 abstract class Task implements Comparable<Task>{
 
@@ -107,5 +108,50 @@ abstract class Task implements Comparable<Task>{
         };
     }
 
-}
+    // checks whether a task is insertable in a zone
+    public boolean isInsertable(FreeZone zone){
+        //must check first that it is unscheduled !
+        // verify wether the zone is after the deadline of the task and that the zone is not occupied
+        if(!(zone instanceof OccupiedZone) && getDeadLine().toLocalTime().isAfter(zone.getStartTime())){
+            // verify if the task fits inside the zone and that it is still within the deadline after the insertion
+            if(getDuration().minus(zone.getDuration()).isPositive() && getDeadLine().toLocalTime().isAfter(zone.getStartTime().plus(getDuration()))  ){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    // checks whether a task is insertable in a given day
+    public boolean isInsertable(Day day){
+        if(getDeadLine().toLocalDate().equals(day.getDate()) || getDeadLine().toLocalDate().isAfter(day.getDate())){
+            for(FreeZone zone: day.getZones()){
+                if(isInsertable(zone)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // checks whether a task is insertable in a day given a specefic zone
+    public boolean isInsertable(Day day,FreeZone zone){
+        return day.contains(zone) && isInsertable(day) && isInsertable(zone);
+    }
+
+    // returns the first zone that you can insert a task inside (in a given day ofc)
+    public FreeZone getInsertable(Day day){
+        if(getDeadLine().toLocalDate().equals(day.getDate()) || getDeadLine().toLocalDate().isAfter(day.getDate())){
+            for(FreeZone zn: day.getZones()){
+                if(isInsertable(zn)){
+                    return zn;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean equals(Task task){
+        return (this.unscheduled==task.getUnscheduled() && this.name==task.getName() && this.deadLine.equals(task.deadLine) && this.duration.minus(task.duration)==Duration.ZERO);
+    }
+
+}

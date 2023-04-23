@@ -1,6 +1,8 @@
+import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.TreeSet;
@@ -71,5 +73,55 @@ public class Day implements Comparable<Day> {
         for (FreeZone z : zones) {
             System.out.println("->  "+z.getStartTime()+" - "+z.getEndTime());
         }
+    }
+
+    public int getZonesNumber(){
+        return zones.size();
+    }
+    public TreeSet<FreeZone> getZones(){
+        return zones;
+    }
+    public boolean contains(FreeZone zone){
+        return zones.contains(zone);
+    }
+
+    public void unAppendTask(Task task,FreeZone zone){
+        FreeZone newZone;
+        if(!task.getUnscheduled() && contains(zone) && (zone instanceof OccupiedZone)){
+            if(((OccupiedZone) zone).contains(task)){
+                newZone = new FreeZone(zone.getStartTime(),zone.getEndTime());
+                removeZone(zone);
+                insertZone(newZone);
+                if(task instanceof SimpleTask){
+                    ((SimpleTask) task).unAppendZone();
+                }
+                else{
+                    ((ComplexTask)task).unAppend(zone);
+                }
+            }
+        }
+    }
+
+    public void appendTask(Task task){
+        // must check if unschedule before calling this
+        if(task instanceof SimpleTask){
+            FreeZone zone=task.getInsertable(this);
+            removeZone(zone);
+            ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,task.getDuration());
+            for (FreeZone zn : zones){
+                insertZone(zn);
+            }
+
+        }
+        else if(task instanceof ComplexTask){
+
+        }
+
+    }
+
+    public void appendTask(Task task, LocalTime insertionTime){}
+
+    public void appendTask(Task task,FreeZone zone){
+
     }
 }

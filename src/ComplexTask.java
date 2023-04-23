@@ -21,6 +21,7 @@ public class ComplexTask extends Task{
     public boolean unAppend(FreeZone zone){
         if(assignedZones.contains(zone)){
             assignedZones.remove(zone);
+            setUnscheduled(true);
             return true;
         }
         else {
@@ -49,5 +50,15 @@ public class ComplexTask extends Task{
         for (Iterator<FreeZone> iter = assignedZones.iterator(); iter.hasNext(); ) {
             iter.next().showZone();
         }
+    }
+
+    public boolean isInsertable(FreeZone zone){
+        if(!(zone instanceof OccupiedZone) && getDeadLine().toLocalTime().isAfter(zone.getStartTime())){
+            // now only the deadline is needed, the task can be later on fragmented if not fitting inside the zone
+            if(getDeadLine().toLocalTime().isAfter(zone.getStartTime().plus(getDuration())) || getDeadLine().toLocalTime().isAfter(zone.getStartTime().plus(zone.getDuration()))){
+                return true;
+            }
+        }
+        return false;
     }
 }

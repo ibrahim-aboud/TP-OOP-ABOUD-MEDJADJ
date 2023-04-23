@@ -18,4 +18,11 @@ public class OccupiedZone extends FreeZone{
     public void showZone(){
         System.out.println("occupiedZone "+name+" : from "+getStartTime().toString()+"to"+getEndTime().toString());
     }
+
+    public boolean contains(Task task){
+        return this.task.equals(task);
+    }
+    public Task getTask(){
+        return this.task;
+    }
 }
