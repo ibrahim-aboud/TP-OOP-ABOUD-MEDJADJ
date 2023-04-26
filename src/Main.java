@@ -73,7 +73,7 @@ public class Main {
         FreeZone zone5 = new FreeZone(LocalTime.of(7, 30), LocalTime.of(8, 30));
 
         Day day1= new Day(LocalDate.of(2023, 1, 1));
-        day1.insertZone(zone1);
+        //day1.insertZone(zone1);
         day1.insertZone(zone4);
 
         Day day2= new Day(LocalDate.of(1990, 12, 12));
@@ -82,8 +82,8 @@ public class Main {
         Day day5= new Day(LocalDate.of(1990, 12, 12));
         Day day6= new Day(LocalDate.of(1990, 12, 12));
 
-        System.out.println(task1.isInsertable(zone1));
-        task1.getInsertable(day1).showZone();
+        System.out.println(task1.isInsertable(day1,LocalTime.of(14,00)));
+        /*task1.getInsertable(day1).showZone();*/
 
 /*        calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone1);
         calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone2);

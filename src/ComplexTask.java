@@ -1,5 +1,6 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -52,12 +53,14 @@ public class ComplexTask extends Task{
         }
     }
 
-    public boolean isInsertable(FreeZone zone){
-        if(!(zone instanceof OccupiedZone) && getDeadLine().toLocalTime().isAfter(zone.getStartTime())){
-            // now only the deadline is needed, the task can be later on fragmented if not fitting inside the zone
-            if(getDeadLine().toLocalTime().isAfter(zone.getStartTime().plus(getDuration())) || getDeadLine().toLocalTime().isAfter(zone.getStartTime().plus(zone.getDuration()))){
-                return true;
-            }
+    // Goto Task for full explanation of exceptions
+    public boolean isInsertable(FreeZone zone, LocalTime insertionTime){
+        //must check first that it is unscheduled !
+        // verify wether the zone is after the deadline of the task and that the zone is not occupied
+        if(zone.contains(insertionTime) && !(zone instanceof OccupiedZone) ){
+            // no need to check if the task fits in the zone since it will decompose anyways
+            return true;
+
         }
         return false;
     }
