@@ -116,9 +116,9 @@ abstract class Task implements Comparable<Task>{
     public boolean isInsertable(FreeZone zone,LocalTime insertionTime){
         //must check first that it is unscheduled !
         // verify wether the zone is after the deadline of the task and that the zone is not occupied
-        if(zone.contains(insertionTime) && !(zone instanceof OccupiedZone) && getDeadLine().toLocalTime().isAfter(zone.getStartTime())){
+        if(zone.contains(insertionTime) && !(zone instanceof OccupiedZone) ){
             // verify if the task fits inside the zone and that it is still within the deadline after the insertion
-            if(getDuration().minus(zone.getDuration()).isPositive() && getDeadLine().toLocalTime().isAfter(zone.getStartTime().plus(getDuration()))  ){
+            if(getDuration().minus(Duration.between(insertionTime,zone.getEndTime())).isNegative() || getDuration().minus(Duration.between(insertionTime,zone.getEndTime())).isZero() ){
                 return true;
             }
         }
@@ -139,9 +139,10 @@ abstract class Task implements Comparable<Task>{
 
     // checks whether a task is insertable in a day given a specefic zone
     public boolean isInsertable(Day day,FreeZone zone){
-        return day.contains(zone) && isInsertable(day) && isInsertable(zone);
+        return day.contains(zone) && isInsertable(day) && isInsertable(zone) && (!getDeadLine().toLocalDate().equals(day.getDate())||(getDeadLine().toLocalTime().isAfter(zone.getStartTime().plus(getDuration())) || getDeadLine().toLocalTime().equals(zone.getStartTime().plus(getDuration()))) );
     }
 
+    // watch out ! this one can return a null value !
     // returns the first zone that you can insert a task inside (in a given day ofc)
     public FreeZone getInsertable(Day day){
         if(getDeadLine().toLocalDate().equals(day.getDate()) || getDeadLine().toLocalDate().isAfter(day.getDate())){

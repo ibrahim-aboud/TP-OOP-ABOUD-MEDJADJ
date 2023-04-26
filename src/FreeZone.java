@@ -140,6 +140,6 @@ public class FreeZone implements Comparable<FreeZone> {
     }
 
     public boolean contains(LocalTime time){
-        return time.isAfter(startTime) && time.isBefore(endTime);
+        return (time.isAfter(startTime) || time.equals(startTime)) && (time.isBefore(endTime) || time.equals(endTime));
     }
 }

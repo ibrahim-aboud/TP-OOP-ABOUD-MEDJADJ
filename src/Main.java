@@ -1,3 +1,5 @@
+import jdk.jshell.execution.LoaderDelegate;
+
 import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -18,7 +20,7 @@ public class Main {
         // We need a way to store user info on the machine, eg. a file.
 //        app.signup("ok", "123");
 //        app.login("ok", "123");
-
+/*
         Calendar calendar = new Calendar();
         calendar.addDay(new Day(LocalDate.now()));
         calendar.addDay(new Day(LocalDate.of(1990, 12, 12)));
@@ -28,7 +30,7 @@ public class Main {
         calendar.addDay(new Day(LocalDate.of(2023, 4, 14)));
         Planning planning1 = new Planning(LocalDate.now(), LocalDate.of(2023, 4, 23), calendar);
 
-        calendar.addPlanning(planning1);
+        calendar.addPlanning(planning1);*/
 
 //        calendar.showCalendar();
 //        System.out.println(" ----------------");
@@ -61,13 +63,29 @@ public class Main {
 //        System.out.println(" ----------------");
 //        planning1.showPlanning();
 
-        FreeZone zone1 = new FreeZone(LocalTime.of(18, 30), LocalTime.of(18, 59));
-        FreeZone zone2 = new FreeZone(LocalTime.of(8, 30), LocalTime.of(10, 59));
-        FreeZone zone3 = new FreeZone(LocalTime.of(1, 30), LocalTime.of(1, 59));
-        FreeZone zone4 = new FreeZone(LocalTime.of(20, 30), LocalTime.of(22, 59));
+        Task task1 = new SimpleTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,1,1,17,0), Duration.ofHours(3),0);
+        Task task2 = new ComplexTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,12,12,17,30), Duration.ofHours(5));
+
+        FreeZone zone1 = new FreeZone(LocalTime.of(8, 30), LocalTime.of(11, 30));
+        FreeZone zone2 = new FreeZone(LocalTime.of(8, 0), LocalTime.of(10, 0));
+        FreeZone zone3 = new FreeZone(LocalTime.of(17, 0), LocalTime.of(22, 0));
+        FreeZone zone4 = new FreeZone(LocalTime.of(14, 0), LocalTime.of(22, 0));
         FreeZone zone5 = new FreeZone(LocalTime.of(7, 30), LocalTime.of(8, 30));
 
-        calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone1);
+        Day day1= new Day(LocalDate.of(2023, 1, 1));
+        day1.insertZone(zone1);
+        day1.insertZone(zone4);
+
+        Day day2= new Day(LocalDate.of(1990, 12, 12));
+        Day day3= new Day(LocalDate.of(1990, 12, 12));
+        Day day4= new Day(LocalDate.of(1990, 12, 12));
+        Day day5= new Day(LocalDate.of(1990, 12, 12));
+        Day day6= new Day(LocalDate.of(1990, 12, 12));
+
+        System.out.println(task1.isInsertable(zone1));
+        task1.getInsertable(day1).showZone();
+
+/*        calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone1);
         calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone2);
         calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone3);
         calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone4);
@@ -75,7 +93,7 @@ public class Main {
 
         calendar.getDay(LocalDate.of(1990, 12, 12)).removeZone(new FreeZone(LocalTime.of(1, 30), LocalTime.of(1, 59)));
 
-        calendar.getDay(LocalDate.of(1990, 12, 12)).showDay();
+        calendar.getDay(LocalDate.of(1990, 12, 12)).showDay();*/
 
     }
 }

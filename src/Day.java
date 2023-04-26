@@ -187,9 +187,9 @@ public class Day implements Comparable<Day> {
         }
     }
 
-    public void appendTask(Task task,FreeZone zone){
+/*    public void appendTask(Task task,FreeZone zone){
         if(contains(zone) && task.isInsertable(this,zone)){
-            
+
         }
-    }
+    }*/
 }
