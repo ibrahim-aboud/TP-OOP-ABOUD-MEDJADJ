@@ -168,7 +168,6 @@ abstract class Task implements Comparable<Task>{
         return false;
     }
 
-
     // watch out ! this one can return a null value !
     // returns the first zone that you can insert a task inside (in a given day ofc)
     public FreeZone getInsertable(Day day){

@@ -64,17 +64,22 @@ public class Main {
 //        planning1.showPlanning();
 
         Task task1 = new SimpleTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,1,1,17,0), Duration.ofHours(3),0);
-        Task task2 = new ComplexTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,12,12,17,30), Duration.ofHours(5));
+        Task task2 = new ComplexTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,12,12,17,30), Duration.ofHours(3));
 
-        FreeZone zone1 = new FreeZone(LocalTime.of(8, 30), LocalTime.of(11, 30));
-        FreeZone zone2 = new FreeZone(LocalTime.of(8, 0), LocalTime.of(10, 0));
+        FreeZone zone1 = new FreeZone(LocalTime.of(8, 0), LocalTime.of(10, 0));
+        FreeZone zone2 = new FreeZone(LocalTime.of(12, 0), LocalTime.of(16, 0));
         FreeZone zone3 = new FreeZone(LocalTime.of(17, 0), LocalTime.of(22, 0));
         FreeZone zone4 = new FreeZone(LocalTime.of(14, 0), LocalTime.of(22, 0));
         FreeZone zone5 = new FreeZone(LocalTime.of(7, 30), LocalTime.of(8, 30));
 
-        Day day1= new Day(LocalDate.of(2023, 1, 1));
+        Day day1= new Day(LocalDate.of(2022, 1, 1));
         //day1.insertZone(zone1);
-        day1.insertZone(zone4);
+        day1.insertZone(zone1);
+        day1.insertZone(zone2);
+        day1.insertZone(zone3);
+        day1.appendTask(task1,Duration.ofMinutes(30));
+        day1.appendTask(task2,Duration.ofMinutes(30),Duration.ofHours(1));
+        day1.showDay();
 
         Day day2= new Day(LocalDate.of(1990, 12, 12));
         Day day3= new Day(LocalDate.of(1990, 12, 12));
@@ -82,7 +87,7 @@ public class Main {
         Day day5= new Day(LocalDate.of(1990, 12, 12));
         Day day6= new Day(LocalDate.of(1990, 12, 12));
 
-        System.out.println(task1.isInsertable(day1,LocalTime.of(14,00)));
+
         /*task1.getInsertable(day1).showZone();*/
 
 /*        calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone1);

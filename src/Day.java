@@ -73,6 +73,11 @@ public class Day implements Comparable<Day> {
     public void showDay() {
         for (FreeZone z : zones) {
             System.out.println("->  "+z.getStartTime()+" - "+z.getEndTime());
+            if(z instanceof OccupiedZone){
+                System.out.println(((OccupiedZone) z).getTask().getName());
+                System.out.println(((OccupiedZone) z).getTask().getDuration().toString());
+            }
+
         }
     }
 
@@ -127,8 +132,8 @@ public class Day implements Comparable<Day> {
     }
 
     // to complete later (highlight the insertionTime parameter)
-
-/*    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime){
+    // HERE MUST ADD GETINSERTABLE (DAY, INSERTION ZONE) TO TASK
+    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime){
         if(task instanceof SimpleTask){
             FreeZone zone=task.getInsertable(this);
             removeZone(zone);
@@ -145,7 +150,7 @@ public class Day implements Comparable<Day> {
                 insertZone(zn);
             }
         }
-    }*/
+    }
 
     // to complete later (highlight the insertionTime parameter)
 
