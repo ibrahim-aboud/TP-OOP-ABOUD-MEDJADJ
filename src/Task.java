@@ -180,6 +180,17 @@ abstract class Task implements Comparable<Task>{
         }
         return null;
     }
+
+    public FreeZone getInsertable(Day day,LocalTime insertionTime){
+        if(getDeadLine().toLocalDate().equals(day.getDate()) || getDeadLine().toLocalDate().isAfter(day.getDate())){
+            for(FreeZone zn: day.getZones()){
+                if(isInsertable(zn,insertionTime)){
+                    return zn;
+                }
+            }
+        }
+        return null;
+    }
     public boolean equals(Task task){
         return (this.unscheduled==task.getUnscheduled() && this.name==task.getName() && this.deadLine.equals(task.deadLine) && this.duration.minus(task.duration)==Duration.ZERO);
     }

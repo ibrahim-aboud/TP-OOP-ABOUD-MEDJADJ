@@ -63,8 +63,8 @@ public class Main {
 //        System.out.println(" ----------------");
 //        planning1.showPlanning();
 
-        Task task1 = new SimpleTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,1,1,17,0), Duration.ofHours(3),0);
-        Task task2 = new ComplexTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,12,12,17,30), Duration.ofHours(3));
+        Task task1 = new SimpleTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,1,1,17,0), Duration.ofHours(1),0);
+        Task task2 = new ComplexTask("prepareTools",category,Priority.HIGH, LocalDateTime.of(2023,12,12,17,30), Duration.ofHours(5));
 
         FreeZone zone1 = new FreeZone(LocalTime.of(8, 0), LocalTime.of(10, 0));
         FreeZone zone2 = new FreeZone(LocalTime.of(12, 0), LocalTime.of(16, 0));
@@ -77,8 +77,8 @@ public class Main {
         day1.insertZone(zone1);
         day1.insertZone(zone2);
         day1.insertZone(zone3);
-        day1.appendTask(task1,Duration.ofMinutes(30));
-        day1.appendTask(task2,Duration.ofMinutes(30),Duration.ofHours(1));
+        //day1.appendTask(task1,Duration.ofMinutes(30),LocalTime.of(10,0));
+        day1.appendTask(task2,Duration.ofMinutes(30),LocalTime.of(13,0));
         day1.showDay();
 
         Day day2= new Day(LocalDate.of(1990, 12, 12));
@@ -90,7 +90,7 @@ public class Main {
 
         /*task1.getInsertable(day1).showZone();*/
 
-/*        calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone1);
+/*      calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone1);
         calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone2);
         calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone3);
         calendar.getDay(LocalDate.of(1990, 12, 12)).insertZone(zone4);

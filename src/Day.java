@@ -113,88 +113,106 @@ public class Day implements Comparable<Day> {
         if(task.isInsertable(this)){
             if(task instanceof SimpleTask){
                 FreeZone zone=task.getInsertable(this);
-                removeZone(zone);
-                ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength);
-                for (FreeZone zn : zones){
-                    insertZone(zn);
+                if(zone!=null){
+                    removeZone(zone);
+                    ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength);
+                    for (FreeZone zn : zones){
+                        insertZone(zn);
+                    }
                 }
+
             }
             else if(task instanceof ComplexTask){
                 FreeZone zone=task.getInsertable(this);
+                if(zone!=null){
+                    removeZone(zone);
+                    ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength);
+                    for(FreeZone zn:zones){
+                        insertZone(zn);
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    // to complete later (highlight the insertionTime parameter)
+    // HERE MUST ADD GETINSERTABLE (DAY, INSERTION Time) TO TASK
+    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime){
+        if(task instanceof SimpleTask){
+            FreeZone zone=task.getInsertable(this,insertionTime);
+            if(zone!=null) {
                 removeZone(zone);
-                ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength);
+                ArrayList<FreeZone> zones = zone.appendTask((SimpleTask) task, minimumZoneLength, insertionTime);
+                for (FreeZone zn : zones) {
+                    insertZone(zn);
+                }
+            }
+        }
+        else if(task instanceof ComplexTask){
+            FreeZone zone=task.getInsertable(this,insertionTime);
+            if(zone!=null){
+                removeZone(zone);
+                ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength,insertionTime);
                 for(FreeZone zn:zones){
                     insertZone(zn);
                 }
             }
         }
-
-    }
-
-    // to complete later (highlight the insertionTime parameter)
-    // HERE MUST ADD GETINSERTABLE (DAY, INSERTION ZONE) TO TASK
-    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime){
-        if(task instanceof SimpleTask){
-            FreeZone zone=task.getInsertable(this);
-            removeZone(zone);
-            ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength,insertionTime);
-            for (FreeZone zn : zones) {
-                insertZone(zn);
-            }
-        }
-        else if(task instanceof ComplexTask){
-            FreeZone zone=task.getInsertable(this);
-            removeZone(zone);
-            ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength,insertionTime);
-            for(FreeZone zn:zones){
-                insertZone(zn);
-            }
-        }
     }
 
     // to complete later (highlight the insertionTime parameter)
 
-/*    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime,Duration subTaskDuration){
+    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime,Duration subTaskDuration){
         if(task instanceof SimpleTask){
-            FreeZone zone=task.getInsertable(this);
-            removeZone(zone);
-            ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength,insertionTime);
-            for (FreeZone zn : zones) {
-                insertZone(zn);
+            FreeZone zone=task.getInsertable(this,insertionTime);
+            if(zone!=null){
+                removeZone(zone);
+                ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength);
+                for (FreeZone zn : zones) {
+                    insertZone(zn);
+                }
             }
+
         }
         else if(task instanceof ComplexTask){
-            FreeZone zone=task.getInsertable(this);
-            removeZone(zone);
-            ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength,insertionTime,subTaskDuration);
-            for(FreeZone zn:zones){
-                insertZone(zn);
+            FreeZone zone=task.getInsertable(this,insertionTime);
+            if(zone!=null){
+                removeZone(zone);
+                ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength,subTaskDuration);
+                for(FreeZone zn:zones){
+                    insertZone(zn);
+                }
             }
         }
-    }*/
+    }
 
     public void appendTask(Task task,Duration minimumZoneLength ,Duration subTaskDuration){
         if(task instanceof SimpleTask){
             FreeZone zone=task.getInsertable(this);
-            removeZone(zone);
-            ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength);
-            for (FreeZone zn : zones) {
-                insertZone(zn);
+            if(zone!=null){
+                removeZone(zone);
+                ArrayList<FreeZone> zones=zone.appendTask((SimpleTask)task,minimumZoneLength);
+                for (FreeZone zn : zones) {
+                    insertZone(zn);
+                }
             }
+
         }
         else if(task instanceof ComplexTask){
             FreeZone zone=task.getInsertable(this);
-            removeZone(zone);
-            ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength,subTaskDuration);
-            for(FreeZone zn:zones){
-                insertZone(zn);
+            if(zone!=null){
+                removeZone(zone);
+                ArrayList<FreeZone> zones=zone.appendTask((ComplexTask)task,minimumZoneLength,subTaskDuration);
+                for(FreeZone zn:zones){
+                    insertZone(zn);
+                }
             }
         }
     }
 
-/*    public void appendTask(Task task,FreeZone zone){
-        if(contains(zone) && task.isInsertable(this,zone)){
-
-        }
-    }*/
+    public void appendTask(Task task,Duration minimumZoneLength,FreeZone zone){
+        appendTask(task,minimumZoneLength,zone.getStartTime());
+    }
 }
