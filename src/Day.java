@@ -120,7 +120,8 @@ public class Day implements Comparable<Day> {
     }
 
     // removes a task from a day (the one that we will use)
-    // if it 
+    // if the task is simple, then it will remove one zone from the day
+    // if the task is complex, then it will remove all occurences of task in that day
     public boolean unAppendTask(Task task){
         if(task instanceof SimpleTask){
             if(!task.getUnscheduled()){
