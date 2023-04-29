@@ -77,12 +77,16 @@ public class Main {
         day1.insertZone(zone1);
         day1.insertZone(zone2);
         day1.insertZone(zone3);
-        //day1.appendTask(task1,Duration.ofMinutes(30),LocalTime.of(10,0));
+/*        day1.appendTask(task1,Duration.ofMinutes(30),LocalTime.of(18,0));*/
+
         while(task2.getUnscheduled()){
             System.out.println(day1.appendTask(task2,Duration.ofMinutes(30),Duration.ofHours(1)));
         }
+        day1.unAppendTask(task2);
 
         day1.showDay();
+
+
 
         Day day2= new Day(LocalDate.of(1990, 12, 12));
         Day day3= new Day(LocalDate.of(1990, 12, 12));

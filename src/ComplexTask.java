@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -63,5 +64,13 @@ public class ComplexTask extends Task{
 
         }
         return false;
+
+    }
+
+    public boolean isTotallyFree(){
+        return zonesNumber()==0;
+    }
+    public ArrayList<FreeZone> getAssignedZones(){
+        return assignedZones;
     }
 }

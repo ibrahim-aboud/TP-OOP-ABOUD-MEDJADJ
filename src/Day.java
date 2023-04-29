@@ -91,23 +91,62 @@ public class Day implements Comparable<Day> {
         return zones.contains(zone);
     }
 
-    public void unAppendTask(Task task,FreeZone zone){
+    public boolean unAppendTask(Task task,FreeZone zone){
+
         FreeZone newZone;
-        if(!task.getUnscheduled() && contains(zone) && (zone instanceof OccupiedZone)){
-            if(((OccupiedZone) zone).contains(task)){
-                newZone = new FreeZone(zone.getStartTime(),zone.getEndTime());
-                removeZone(zone);
-                insertZone(newZone);
-                if(task instanceof SimpleTask){
-                    ((SimpleTask) task).unAppendZone();
-                }
-                else{
-                    ((ComplexTask)task).unAppend(zone);
+
+        if(zone!=null){
+
+            if(contains(zone) && (zone instanceof OccupiedZone)){
+
+                if(((OccupiedZone) zone).contains(task)){
+                    newZone = new FreeZone(zone.getStartTime(),zone.getEndTime());
+                    removeZone(zone);
+                    insertZone(newZone);
+                    if(task instanceof SimpleTask){
+                        ((SimpleTask) task).unAppendZone();
+                    }
+                    else{
+
+                        ((ComplexTask)task).unAppend(zone);
+
+                    }
+                    return true;
                 }
             }
         }
+        return false;
+
     }
 
+    // removes a task from a day (the one that we will use)
+    // if it 
+    public boolean unAppendTask(Task task){
+        if(task instanceof SimpleTask){
+            if(!task.getUnscheduled()){
+                return unAppendTask(task,((SimpleTask) task).getAssignedZone());
+            }
+
+        }
+        else if(task instanceof ComplexTask){
+            boolean returnValue = false;
+            ArrayList<FreeZone> currentZonesInTask=(ArrayList<FreeZone>)((ComplexTask) task).getAssignedZones().clone();
+            for (FreeZone zone : currentZonesInTask) {
+                if(!((ComplexTask) task).isTotallyFree()){
+                    // Note: do not flip the two parameters
+                    // because in boolean operations (logical 'or')
+                    // if the first operator is true, no need to go
+                    // through the other operators
+                    // and so it can skip function execution
+                    // which can be sometimes usefull
+                    returnValue = unAppendTask(task,zone) || returnValue;
+
+                }
+            }
+            return returnValue;
+        }
+        return false;
+    }
 
     //For each of the following methods
     //you must check that the given task is unscheduled (because of other treatments with periodic tasks)
