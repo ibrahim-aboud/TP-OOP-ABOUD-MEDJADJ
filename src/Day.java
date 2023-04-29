@@ -108,7 +108,12 @@ public class Day implements Comparable<Day> {
         }
     }
 
-    public void appendTask(Task task, Duration minimumZoneLength){
+
+    //For each of the following methods
+    //you must check that the given task is unscheduled (because of other treatments with periodic tasks)
+
+    // adds a task where possible in a day
+    public boolean appendTask(Task task, Duration minimumZoneLength){
         // must check if unschedule before calling this
         if(task.isInsertable(this)){
             if(task instanceof SimpleTask){
@@ -119,8 +124,9 @@ public class Day implements Comparable<Day> {
                     for (FreeZone zn : zones){
                         insertZone(zn);
                     }
+                    return true;
                 }
-
+                return false;
             }
             else if(task instanceof ComplexTask){
                 FreeZone zone=task.getInsertable(this);
@@ -130,16 +136,17 @@ public class Day implements Comparable<Day> {
                     for(FreeZone zn:zones){
                         insertZone(zn);
                     }
+                    return true;
                 }
-
+                return false;
             }
         }
+        return false;
 
     }
 
-    // to complete later (highlight the insertionTime parameter)
-    // HERE MUST ADD GETINSERTABLE (DAY, INSERTION Time) TO TASK
-    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime){
+    // adds a task to a day while specifying exactly the insertion time
+    public boolean appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime){
         if(task instanceof SimpleTask){
             FreeZone zone=task.getInsertable(this,insertionTime);
             if(zone!=null) {
@@ -148,7 +155,9 @@ public class Day implements Comparable<Day> {
                 for (FreeZone zn : zones) {
                     insertZone(zn);
                 }
+                return true;
             }
+            return false;
         }
         else if(task instanceof ComplexTask){
             FreeZone zone=task.getInsertable(this,insertionTime);
@@ -158,13 +167,18 @@ public class Day implements Comparable<Day> {
                 for(FreeZone zn:zones){
                     insertZone(zn);
                 }
+                return true;
             }
+            return false;
         }
+        return false;
     }
 
-    // to complete later (highlight the insertionTime parameter)
 
-    public void appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime,Duration subTaskDuration){
+    // adds a task to a day depending on the insertion time "like the previous one" and the duration
+    // of the portion of the task you want to insert (if the task was complex, other wise the subtask
+    // duration would not have any effect)
+    public boolean appendTask(Task task,Duration minimumZoneLength ,LocalTime insertionTime,Duration subTaskDuration){
         if(task instanceof SimpleTask){
             FreeZone zone=task.getInsertable(this,insertionTime);
             if(zone!=null){
@@ -173,7 +187,9 @@ public class Day implements Comparable<Day> {
                 for (FreeZone zn : zones) {
                     insertZone(zn);
                 }
+                return true;
             }
+            return false;
 
         }
         else if(task instanceof ComplexTask){
@@ -184,11 +200,17 @@ public class Day implements Comparable<Day> {
                 for(FreeZone zn:zones){
                     insertZone(zn);
                 }
+                return true;
             }
+            return false;
         }
+        return false;
     }
 
-    public void appendTask(Task task,Duration minimumZoneLength ,Duration subTaskDuration){
+
+    // adds a task in a day when possible with specifying the duration of the portion inserted
+    // this is when the task is complex, other wise that parameter is ignored
+    public boolean appendTask(Task task,Duration minimumZoneLength ,Duration subTaskDuration){
         if(task instanceof SimpleTask){
             FreeZone zone=task.getInsertable(this);
             if(zone!=null){
@@ -197,7 +219,9 @@ public class Day implements Comparable<Day> {
                 for (FreeZone zn : zones) {
                     insertZone(zn);
                 }
+                return true;
             }
+            return false;
 
         }
         else if(task instanceof ComplexTask){
@@ -208,11 +232,16 @@ public class Day implements Comparable<Day> {
                 for(FreeZone zn:zones){
                     insertZone(zn);
                 }
+                return true;
             }
+            return false;
         }
+        return false;
     }
 
-    public void appendTask(Task task,Duration minimumZoneLength,FreeZone zone){
-        appendTask(task,minimumZoneLength,zone.getStartTime());
+
+    // inserting a task in a day in a specified zone (i don't really know the reason why but we may use it who knows)
+    public boolean appendTask(Task task,Duration minimumZoneLength,FreeZone zone){
+        return appendTask(task,minimumZoneLength,zone.getStartTime());
     }
 }

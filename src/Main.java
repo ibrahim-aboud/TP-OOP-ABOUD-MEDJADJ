@@ -78,7 +78,10 @@ public class Main {
         day1.insertZone(zone2);
         day1.insertZone(zone3);
         //day1.appendTask(task1,Duration.ofMinutes(30),LocalTime.of(10,0));
-        day1.appendTask(task2,Duration.ofMinutes(30),LocalTime.of(13,0));
+        while(task2.getUnscheduled()){
+            System.out.println(day1.appendTask(task2,Duration.ofMinutes(30),Duration.ofHours(1)));
+        }
+
         day1.showDay();
 
         Day day2= new Day(LocalDate.of(1990, 12, 12));
@@ -86,6 +89,8 @@ public class Main {
         Day day4= new Day(LocalDate.of(1990, 12, 12));
         Day day5= new Day(LocalDate.of(1990, 12, 12));
         Day day6= new Day(LocalDate.of(1990, 12, 12));
+
+
 
 
         /*task1.getInsertable(day1).showZone();*/
